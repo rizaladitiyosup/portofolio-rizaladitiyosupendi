@@ -575,9 +575,75 @@
       margin-left: 0.5rem;
     }
 
+    /* ── HAMBURGER BUTTON ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      cursor: pointer;
+      padding: 0;
+      transition: border-color 0.2s, background 0.3s;
+      flex-shrink: 0;
+    }
+
+    .hamburger:hover { border-color: var(--subtle); }
+
+    .hamburger span {
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--muted);
+      border-radius: 2px;
+      transition: transform 0.25s ease, opacity 0.2s ease, background 0.3s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE DROPDOWN ── */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0; right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 98;
+      padding: 0.5rem 0;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .nav-mobile.open { display: block; }
+
+    .nav-mobile a {
+      display: block;
+      padding: 0.85rem 6vw;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile a:hover { color: var(--text); background: var(--surface); }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .nav-center { display: none; }
+      .hamburger { display: flex; }
       .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
       .skill-row { flex-direction: column; gap: 0.65rem; }
       footer { flex-direction: column; gap: 0.4rem; text-align: center; }
