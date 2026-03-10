@@ -41,7 +41,7 @@ A Data Analyst with genuine curiosity for data. I enjoy working through complex 
 ## 📬 Contact
 
 - 📧 rizaladitiyosupendi@gmail.com
-- 📱 +62 851 6141 246
+- 📱 +62 851 6114 1246
 - 💼 [LinkedIn](https://www.linkedin.com/in/rizal-aditiyo-supendi/)
 
 ---
