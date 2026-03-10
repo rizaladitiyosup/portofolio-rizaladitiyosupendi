@@ -666,6 +666,9 @@
     <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
       <span id="themeIcon">☀</span>
     </button>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -888,6 +891,27 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // ── HAMBURGER MENU ──
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const navMobile    = document.getElementById('navMobile');
+
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerBtn.classList.toggle('open');
+    navMobile.classList.toggle('open');
+  });
+
+  function closeMobileNav() {
+    hamburgerBtn.classList.remove('open');
+    navMobile.classList.remove('open');
+  }
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!hamburgerBtn.contains(e.target) && !navMobile.contains(e.target)) {
+      closeMobileNav();
+    }
+  });
+  
   // ── THEME TOGGLE ──
   const html = document.documentElement;
   const btn  = document.getElementById('themeToggle');
