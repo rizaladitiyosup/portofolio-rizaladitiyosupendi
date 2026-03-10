@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rizal Aditiyo — Data Analyst</title>
+  <title>Rizal Aditiyo Supendi — Data Analyst</title>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     /* ── TOKENS ── */
@@ -524,6 +524,57 @@
     .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.show { opacity: 1; transform: none; }
 
+    /* ── PAGINATION ── */
+    .port-pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .page-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      height: 36px;
+      padding: 0 0.55rem;
+      border-radius: 7px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      font-family: 'Geist', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .page-btn:hover:not(:disabled) {
+      border-color: var(--subtle);
+      color: var(--text);
+    }
+
+    .page-btn.active {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      font-weight: 500;
+    }
+
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .page-info {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-left: 0.5rem;
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
       .nav-center { display: none; }
@@ -556,7 +607,7 @@
 <section id="home">
   <div class="container">
     <div class="hero-tag">Data Analyst · Malang, Indonesia</div>
-    <h1>RIZAL<br><span class="accent">ADITIYO</span></h1>
+    <h1>RIZAL<br><span class="accent">ADITIYO SUPENDI</span></h1>
     <p class="hero-desc">
       Passionate about turning raw data into clear, actionable insights.
       Experienced in analysis, visualization, and machine learning.
@@ -722,6 +773,15 @@
 
       
     </div>
+
+    <!-- PAGINATION -->
+    <div class="port-pagination reveal" id="portPagination">
+      <button class="page-btn" id="pagePrev" aria-label="Previous page">← Prev</button>
+      <div id="pageNumbers" style="display:flex;gap:0.5rem;"></div>
+      <button class="page-btn" id="pageNext" aria-label="Next page">Next →</button>
+      <span class="page-info" id="pageInfo"></span>
+    </div>
+
   </div>
 </section>
 
@@ -734,8 +794,8 @@
       <div class="rule"></div>
     </div>
     <div class="contact-grid reveal">
-      <a href="mailto:rizaladitiyosupendi@gmail.com" class="contact-row">
-        <div><div class="contact-type">Email</div><div class="contact-val">rizaladitiyosupendi@gmail.com</div></div>
+      <a href="/cdn-cgi/l/email-protection#15677c6f747974717c617c6c7a666065707b717c557278747c793b767a78" class="contact-row">
+        <div><div class="contact-type">Email</div><div class="contact-val"><span class="__cf_email__" data-cfemail="1b6972617a777a7f726f726274686e6b7e757f725b7c767a727735787476">[email&#160;protected]</span></div></div>
         <span class="contact-arr">↗</span>
       </a>
       <a href="tel:+628516141246" class="contact-row">
@@ -761,7 +821,7 @@
   <div class="badge"><span class="badge-dot"></span> Available for work</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // ── THEME TOGGLE ──
   const html = document.documentElement;
   const btn  = document.getElementById('themeToggle');
@@ -861,24 +921,154 @@
     searchClear.classList.toggle('visible', q.length > 0);
   }
 
-  searchInput.addEventListener('input', e => doSearch(e.target.value));
-
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    searchInput.focus();
-    doSearch('');
-  });
+  // Search listeners handled by pagination version below
 
 
+  // ── ACTIVE NAV HIGHLIGHT ──
   const sections  = document.querySelectorAll('section[id]');
   const navLinks  = document.querySelectorAll('.nav-center a');
   window.addEventListener('scroll', () => {
-    let cur = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 70) cur = s.id; });
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
     navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--text)' : '';
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--text)' : '';
     });
   });
+
+  // ── IN-PAGE PAGINATION ──
+  const CARDS_PER_PAGE = 6;
+  let currentPage = 1;
+  let filteredCards = [];
+
+  function getAllCards() {
+    return Array.from(document.querySelectorAll('.port-card'));
+  }
+
+  function renderPage(page) {
+    const allCards = getAllCards();
+    // Determine which cards are "active" (not hidden by search)
+    const active = allCards.filter(c => !c.classList.contains('search-hidden'));
+    filteredCards = active;
+
+    const totalPages = Math.max(1, Math.ceil(active.length / CARDS_PER_PAGE));
+    currentPage = Math.min(Math.max(1, page), totalPages);
+
+    const start = (currentPage - 1) * CARDS_PER_PAGE;
+    const end   = start + CARDS_PER_PAGE;
+
+    // Show/hide cards based on page
+    allCards.forEach(card => {
+      if (card.classList.contains('search-hidden')) {
+        card.classList.add('hidden');
+        return;
+      }
+      const idx = active.indexOf(card);
+      card.classList.toggle('hidden', idx < start || idx >= end);
+    });
+
+    updatePaginationUI(totalPages);
+  }
+
+  function updatePaginationUI(totalPages) {
+    const prev    = document.getElementById('pagePrev');
+    const next    = document.getElementById('pageNext');
+    const nums    = document.getElementById('pageNumbers');
+    const info    = document.getElementById('pageInfo');
+    const wrapper = document.getElementById('portPagination');
+
+    // Hide pagination if only 1 page
+    wrapper.style.display = totalPages <= 1 ? 'none' : 'flex';
+
+    prev.disabled = currentPage === 1;
+    next.disabled = currentPage === totalPages;
+
+    // Page number buttons
+    nums.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.addEventListener('click', () => {
+        renderPage(i);
+        // Smooth scroll to top of portfolio section
+        document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      nums.appendChild(btn);
+    }
+
+    const start = (currentPage - 1) * CARDS_PER_PAGE + 1;
+    const end   = Math.min(currentPage * CARDS_PER_PAGE, filteredCards.length);
+    info.textContent = filteredCards.length > 0
+      ? `${start}–${end} of ${filteredCards.length}`
+      : '';
+  }
+
+  // Prev / Next buttons
+  document.getElementById('pagePrev').addEventListener('click', () => {
+    renderPage(currentPage - 1);
+    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.getElementById('pageNext').addEventListener('click', () => {
+    renderPage(currentPage + 1);
+    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // Override doSearch to also reset pagination
+  const _origDoSearch = doSearch;
+  function doSearchWithPagination(q) {
+    const query = q.trim().toLowerCase();
+    const allCards = getAllCards();
+
+    allCards.forEach(card => {
+      const meta  = card.querySelector('.port-meta');
+      const title = card.querySelector('.port-title');
+      const desc  = card.querySelector('.port-desc');
+      const text  = [
+        meta?.dataset.orig  || '',
+        title?.dataset.orig || '',
+        desc?.dataset.orig  || ''
+      ].join(' ').toLowerCase();
+
+      const match = !query || text.includes(query);
+      card.classList.toggle('search-hidden', !match);
+
+      if (match) {
+        highlight(meta, q.trim());
+        highlight(title, q.trim());
+        highlight(desc, q.trim());
+      }
+    });
+
+    const visible = allCards.filter(c => !c.classList.contains('search-hidden')).length;
+
+    if (query) {
+      searchCount.textContent = `${visible} result${visible !== 1 ? 's' : ''}`;
+    } else {
+      searchCount.textContent = '';
+    }
+    noResultsQ.textContent = q.trim();
+    noResults.classList.toggle('visible', query !== '' && visible === 0);
+    searchClear.classList.toggle('visible', q.length > 0);
+
+    // Reset to page 1 on new search
+    renderPage(1);
+  }
+
+  // Replace the original event listeners with paginated version
+  searchInput.removeEventListener('input', searchInput._handler);
+  searchInput.addEventListener('input', e => doSearchWithPagination(e.target.value));
+  searchClear.addEventListener('click', () => {
+    searchInput.value = '';
+    searchInput.focus();
+    doSearchWithPagination('');
+  });
+
+  // Initial render
+  renderPage(1);
+
 </script>
 </body>
 </html>
