@@ -25,7 +25,7 @@ A Data Analyst with genuine curiosity for data. I enjoy working through complex 
 `Predictive Modeling` `Feature Engineering` `Model Evaluation`
 
 **Tools**
-`MySQL` `Tableau` `Power BI` `Google Data Studio` `Excel` `Meta Ads Manager`
+`MySQL` `Tableau` `Power BI` `Google Looker Studio` `Excel` `Meta Ads Manager`
 
 ---
 
