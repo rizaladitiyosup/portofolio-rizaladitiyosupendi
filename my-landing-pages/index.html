@@ -733,6 +733,28 @@
       .skill-row { flex-direction: column; gap: 0.65rem; }
       footer { flex-direction: column; gap: 0.4rem; text-align: center; }
     }
+
+    /* ── BACK TO TOP ── */
+    .back-to-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  font-size: 0.73rem;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+.back-to-top:hover {
+  color: var(--text);
+  border-color: var(--subtle);
+  transform: translateY(-2px);
+}
   </style>
 </head>
 <body>
@@ -996,6 +1018,9 @@
 <!-- FOOTER -->
 <footer>
   <span>© 2026 Rizal Aditiyo Supendi</span>
+  <a href="#home" class="back-to-top">
+    ↑ Back to top
+  </a>
   <div class="badge"><span class="badge-dot"></span> Available for work (Open to remote and relocate)</div>
 </footer>
 
