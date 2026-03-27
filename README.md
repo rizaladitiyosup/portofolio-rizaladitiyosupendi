@@ -11,8 +11,8 @@
 A Data Analyst with genuine curiosity for data. I enjoy working through complex datasets and simplifying them into insights that anyone can act on. Currently available for work and eager to grow a long-term career in the data field.
 
 - 📊 1+ years of experience
-- 🛠️ 6+ tools mastered
-- 🏆 3 certifications
+- 🛠️ 4+ tools mastered
+- 🏆 5+ certifications
 
 ---
 
