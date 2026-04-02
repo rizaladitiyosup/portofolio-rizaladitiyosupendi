@@ -305,7 +305,7 @@
     .about-photo {
       width: 100%;
       height: 100%;
-      aspect-ratio: 4/5;
+      aspect-ratio: 1/1;
       border-radius: 6px;
       background: var(--accent-light);
       display: flex;
@@ -319,7 +319,7 @@
     }
     .about-photo::after {
       content: '';
-      position: absolute;
+      position: top;
       inset: 0;
       background: linear-gradient(135deg, transparent 60%, var(--accent-light) 100%);
     }
@@ -518,7 +518,7 @@
       .nav-links, .nav-badge { display: none; }
       .hamburger { display: flex; }
       #about .inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-photo { aspect-ratio: 3/2; }
+      .about-photo { aspect-ratio: 1/1; }
       #contact .inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .stats-row { gap: 1.5rem; }
     }
