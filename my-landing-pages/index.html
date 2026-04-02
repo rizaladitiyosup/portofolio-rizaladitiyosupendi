@@ -170,29 +170,72 @@
 
     /* ─── HERO ─── */
     #home {
-      min-height: 100vh;
-      padding-top: var(--nav-h);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding-left: 5%;
-      padding-right: 5%;
-      background: linear-gradient(160deg, #f0f5fa 0%, var(--bg) 60%);
-      position: relative;
-      overflow: hidden;
-    }
-    #home::before {
-      content: '';
-      position: absolute;
-      width: 500px; height: 500px;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
-      top: -100px; right: -100px;
-      opacity: .5;
-    }
+  min-height: 100vh;
+  padding-top: var(--nav-h);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-left: 5%;
+  padding-right: 5%;
+  position: relative;
+  overflow: hidden;
 
+  /* Background image */
+  background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Overlay gelap agar teks tetap terbaca */
+#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 25, 47, 0.78) 0%,
+    rgba(20, 40, 70, 0.68) 60%,
+    rgba(42, 92, 143, 0.55) 100%
+  );
+  z-index: 0;
+}
+
+/* Konten hero harus di atas overlay */
+#home > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Warna teks hero disesuaikan agar kontras */
+#home .hero-sub  { color: #7ec8f4; }
+#home .hero-title {
+  color: #ffffff;
+  text-shadow: 0 2px 20px rgba(0,0,0,.35);
+}
+#home .hero-desc { color: rgba(255,255,255,.78); }
+#home .btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(42,92,143,.45);
+}
+#home .btn-outline {
+  border-color: rgba(255,255,255,.6);
+  color: #fff;
+}
+#home .btn-outline:hover {
+  background: rgba(255,255,255,.15);
+  border-color: #fff;
+}
+
+/* Mobile: matikan parallax (iOS tidak support fixed attachment) */
+@media (max-width: 768px) {
+  #home { background-attachment: scroll; }
+}
+    
     .hero-sub {
       font-size: .85rem;
       letter-spacing: .15em;
