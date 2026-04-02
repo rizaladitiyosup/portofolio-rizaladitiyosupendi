@@ -1,1498 +1,938 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="id">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rizal Aditiyo Supendi — Data Analyst</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rizal Aditiyo Supendi – Data Analyst</title>
+  <meta name="description" content="Rizal Aditiyo Supendi – Data Analyst dari Malang, Indonesia. Spesialis analisis data, visualisasi, dan machine learning." />
+  <meta property="og:title" content="Rizal Aditiyo Supendi – Data Analyst" />
+  <meta property="og:description" content="Dari data mentah jadi keputusan nyata — analisis, visualisasi, machine learning." />
+  <meta property="og:type" content="website" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
   <style>
-    /* ── TOKENS ── */
-    [data-theme="dark"] {
-      --bg:      #111110;
-      --surface: #191918;
-      --card:    #1e1e1c;
-      --text:    #e8e6e1;
-      --muted:   #6e6b64;
-      --subtle:  #3d3b36;
-      --accent:  #7eb59a;
-      --border:  #2a2926;
-      --nav-bg:  rgba(17,17,16,0.90);
-      --shadow:  0 8px 28px rgba(0,0,0,0.35);
-      --thumb-bg:#232321;
-    }
-
-    [data-theme="light"] {
-      --bg:      #f7f5f2;
-      --surface: #f0ede8;
-      --card:    #faf9f7;
-      --text:    #1c1a18;
-      --muted:   #7a766f;
-      --subtle:  #c8c3bb;
-      --accent:  #3d6b5e;
-      --border:  #e2ddd7;
-      --nav-bg:  rgba(247,245,242,0.92);
-      --shadow:  0 8px 24px rgba(0,0,0,0.07);
-      --thumb-bg:#e9e6e0;
-    }
-
+    /* ─── RESET & BASE ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f6;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --text-muted: #6b6b6b;
+      --accent: #2a5c8f;
+      --accent-light: #d4e4f4;
+      --border: #e4e0d8;
+      --nav-h: 70px;
+    }
+
     html { scroll-behavior: smooth; }
 
     body {
+      font-family: 'Jost', sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Geist', sans-serif;
-      font-weight: 300;
       font-size: 16px;
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+      line-height: 1.7;
     }
 
-    /* ── NAV ── */
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 99;
+      height: var(--nav-h);
+      background: rgba(250,249,246,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 6vw;
-      height: 60px;
-      background: var(--nav-bg);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s, border-color 0.3s;
+      padding: 0 5%;
+      z-index: 1000;
+      transition: box-shadow .3s;
     }
+    nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.07); }
 
-    .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-
-    .nav-center { display: flex; gap: 2rem; list-style: none; }
-
-    .nav-center a {
-      font-size: 0.82rem;
-      font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      transition: color 0.2s;
-    }
-
-    .nav-center a:hover { color: var(--text); }
-
-    .nav-right { display: flex; align-items: center; gap: 1rem; }
-
-    .badge {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: 0.73rem;
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: .02em;
       color: var(--accent);
-      font-weight: 500;
-      letter-spacing: 0.03em;
     }
 
-    .badge-dot {
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: blink 2s ease-in-out infinite;
-    }
-
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
-
-    /* ── THEME TOGGLE ── */
-    .theme-btn {
-      width: 34px; height: 34px;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      color: var(--muted);
-      cursor: pointer;
+    .nav-links {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: border-color 0.2s, color 0.2s, background 0.3s;
-      font-size: 0.95rem;
-      flex-shrink: 0;
+      list-style: none;
+      gap: 2rem;
     }
-
-    .theme-btn:hover { border-color: var(--subtle); color: var(--text); }
-
-    /* ── SHARED ── */
-    section { padding: 96px 6vw; }
-    .container { max-width: 900px; }
-
-    .label {
-      font-size: 0.7rem;
+    .nav-links a {
+      font-size: .875rem;
       font-weight: 500;
-      letter-spacing: 0.14em;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 0.5rem;
+      color: var(--text-muted);
+      position: relative;
+      padding-bottom: 2px;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-badge {
+      font-size: .75rem;
+      font-weight: 500;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 20px;
+      padding: 4px 12px;
+      white-space: nowrap;
     }
 
-    h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(2.4rem, 5vw, 3.8rem);
-      font-weight: 400;
-      letter-spacing: 0.04em;
-      line-height: 1.0;
-      margin-bottom: 0.4rem;
+    /* hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
     }
-
-    .rule {
-      width: 28px; height: 1px;
-      background: var(--subtle);
-      margin: 1.1rem 0 2rem;
-      transition: background 0.3s;
+    .hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text);
+      transition: transform .3s, opacity .3s;
     }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ── HERO ── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 5%;
+      z-index: 999;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: .5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mobile-menu a:last-child { border: none; }
+
+    /* ─── HERO ─── */
     #home {
       min-height: 100vh;
+      padding-top: var(--nav-h);
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-top: 120px;
-      border-bottom: 1px solid var(--border);
+      align-items: center;
+      text-align: center;
+      padding-left: 5%;
+      padding-right: 5%;
+      background: linear-gradient(160deg, #f0f5fa 0%, var(--bg) 60%);
+      position: relative;
+      overflow: hidden;
+    }
+    #home::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-light) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      opacity: .5;
     }
 
-    .hero-tag {
-      font-size: 0.75rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
+    .hero-sub {
+      font-size: .85rem;
+      letter-spacing: .15em;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.2rem;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 7.5vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -.02em;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .8s .15s ease both;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      margin: 0 auto 2.5rem;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp .8s .45s ease both;
+    }
+    .btn {
+      display: inline-block;
+      padding: .75rem 2rem;
+      border-radius: 3px;
+      font-size: .9rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #1e4870; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ─── SECTIONS ─── */
+    section { padding: 7rem 5%; }
+    section:nth-child(even) { background: var(--surface); }
+
+    .section-label {
+      font-size: .78rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      max-width: 640px;
+      font-size: 1rem;
+      margin-bottom: 3.5rem;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--accent);
+      margin-bottom: 3.5rem;
+    }
+
+    /* ─── SERVICES ─── */
+    #services .section-header { max-width: 960px; margin: 0 auto 1rem; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .service-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      background: var(--bg);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(42,92,143,.1);
+    }
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: .6rem;
+    }
+    .service-card p {
+      font-size: .9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    .service-tools {
+      font-size: .78rem;
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: .03em;
+    }
+
+    /* ─── ABOUT ─── */
+    #about .inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 6px;
+      background: var(--accent-light);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4rem;
+      color: var(--accent);
+      position: relative;
+      overflow: hidden;
     }
-
-    .hero-tag::before {
+    .about-photo::after {
       content: '';
-      display: inline-block;
-      width: 18px; height: 1px;
-      background: var(--subtle);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, var(--accent-light) 100%);
+    }
+    .stats-row {
+      display: flex;
+      gap: 2.5rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .stat { text-align: left; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: .8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: .25rem;
     }
 
-    h1 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(4.5rem, 13vw, 10rem);
-      font-weight: 400;
-      line-height: 0.92;
-      letter-spacing: 0.03em;
-      margin-bottom: 1.75rem;
-      color: var(--text);
-      transition: color 0.3s;
+    /* ─── PORTFOLIO ─── */
+    #portfolio .section-header { max-width: 960px; margin: 0 auto; }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
     }
-
-    h1 .accent { color: var(--accent); }
-
-    .hero-desc {
-      max-width: 400px;
-      color: var(--muted);
-      font-size: 0.93rem;
-      line-height: 1.75;
-      margin-bottom: 2.25rem;
-    }
-
-    .hero-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.6rem 1.3rem;
+    .portfolio-card {
       border-radius: 6px;
-      font-family: 'Geist', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 400;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-      letter-spacing: 0.02em;
-    }
-
-    .btn-solid {
-      background: var(--text);
-      color: var(--bg);
-    }
-
-    .btn-solid:hover { opacity: 0.85; }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border-color: var(--border);
-    }
-
-    .btn-ghost:hover { color: var(--text); border-color: var(--subtle); }
-
-    /* ── ABOUT ── */
-    #about {
+      overflow: hidden;
+      border: 1px solid var(--border);
       background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
+      transition: transform .25s, box-shadow .25s;
+      display: flex;
+      flex-direction: column;
     }
+    .portfolio-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(42,92,143,.1);
+    }
+    .portfolio-thumb {
+      height: 180px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      color: var(--accent);
+      overflow: hidden;
+    }
+    .portfolio-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+    .portfolio-card:hover .portfolio-thumb img { transform: scale(1.04); }
+    .portfolio-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .portfolio-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: .5rem;
+    }
+    .portfolio-body p {
+      font-size: .875rem;
+      color: var(--text-muted);
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+    .tags { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .tag {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .portfolio-link {
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      transition: gap .2s;
+    }
+    .portfolio-link:hover { gap: .7rem; }
 
-    .about-layout {
+    /* ─── CONTACT ─── */
+    #contact .inner {
+      max-width: 960px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 5rem;
       align-items: start;
     }
-
-    .about-text p {
-      color: var(--muted);
-      font-size: 0.93rem;
-      margin-bottom: 1rem;
-      line-height: 1.8;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .stat {
-      background: var(--card);
-      padding: 1.4rem;
-      transition: background 0.3s;
-    }
-
-    .stat-n {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.6rem;
-      color: var(--text);
-      line-height: 1;
-      letter-spacing: 0.02em;
-      margin-bottom: 0.2rem;
-      transition: color 0.3s;
-    }
-
-    .stat-l { font-size: 0.76rem; color: var(--muted); }
-
-    /* ── SKILLS ── */
-    #skills { border-bottom: 1px solid var(--border); }
-
-    .skill-row {
-      display: flex;
-      align-items: baseline;
-      gap: 2rem;
-      padding: 1.2rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .skill-row:last-child { border-bottom: none; }
-
-    .skill-cat {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      min-width: 140px;
-      flex-shrink: 0;
-    }
-
-    .skill-items { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-
-    .tag {
-      font-size: 0.78rem;
-      color: var(--text);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: 0.22rem 0.6rem;
-      border-radius: 4px;
-      transition: border-color 0.15s, background 0.3s, color 0.3s;
-    }
-
-    .tag:hover { border-color: var(--subtle); }
-
-    /* ── SEARCH ── */
-    .search-wrap {
+    .contact-info p {
+      color: var(--text-muted);
       margin-bottom: 2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      max-width: 420px;
     }
-
-    .search-box {
-      flex: 1;
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
+    .contact-list li a {
       display: flex;
       align-items: center;
-      background: var(--card);
+      gap: .75rem;
+      font-size: .95rem;
+      color: var(--text);
+      transition: color .2s;
+    }
+    .contact-list li a:hover { color: var(--accent); }
+    .contact-icon {
+      width: 36px; height: 36px;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0 0.9rem;
-      gap: 0.55rem;
-      transition: border-color 0.2s, background 0.3s;
-    }
-
-    .search-box:focus-within {
-      border-color: var(--subtle);
-    }
-
-    .search-box svg {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
       flex-shrink: 0;
-      color: var(--muted);
-      transition: color 0.2s;
+      transition: background .2s, border-color .2s;
     }
-
-    .search-box:focus-within svg { color: var(--text); }
-
-    .search-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      font-family: 'Geist', sans-serif;
-      font-size: 0.85rem;
-      font-weight: 300;
-      color: var(--text);
-      padding: 0.65rem 0;
-      caret-color: var(--accent);
+    .contact-list li a:hover .contact-icon {
+      background: var(--accent-light);
+      border-color: var(--accent);
     }
-
-    .search-input::placeholder { color: var(--muted); }
-
-    .search-clear {
-      background: none;
-      border: none;
-      cursor: pointer;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1;
-      padding: 0;
-      display: none;
-      transition: color 0.15s;
+    .contact-detail { display: flex; flex-direction: column; }
+    .contact-detail strong { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-muted); }
+    .contact-detail span { font-size: .95rem; }
+    .contact-cta {
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 2rem;
     }
-
-    .search-clear:hover { color: var(--text); }
-    .search-clear.visible { display: block; }
-
-    .search-count {
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-      min-width: 60px;
+    .contact-cta h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      margin-bottom: .75rem;
     }
-
-    /* card hidden state */
-    .port-card.hidden,
-    .port-card.label-hidden {
-      display: none;
-    }
-
-    /* highlight matched text */
-    mark {
-      background: transparent;
-      color: var(--accent);
-      font-weight: 500;
-    }
-
-    .no-results {
-      display: none;
-      color: var(--muted);
-      font-size: 0.88rem;
-      padding: 2rem 0;
-    }
-
-    .no-results.visible { display: block; }
-
-    /* ── PORTFOLIO ── */
-    #portfolio {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
-    }
-
-    .port-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
-      gap: 1.2rem;
-    }
-
-    .port-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      overflow: hidden;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      transition: border-color 0.2s, transform 0.22s, box-shadow 0.22s, background 0.3s;
-    }
-
-    .port-card:hover {
-      border-color: var(--subtle);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow);
-    }
-
-    /* Thumbnail — ganti placeholder dengan <img> saat siap */
-    .port-thumb {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      display: block;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .port-thumb-placeholder {
-      width: 100%;
-      aspect-ratio: 16/9;
-      background: var(--thumb-bg);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--muted);
-      font-size: 0.68rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.3s;
-    }
-
-    .port-thumb-placeholder svg { opacity: 0.3; }
-
-    .port-body { padding: 1rem 1.1rem 0.5rem; flex: 1; }
-    .port-meta { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.2rem; }
-    .port-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.2rem; color: var(--text); transition: color 0.3s; }
-    .port-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
-
-    .port-foot {
-      padding: 0.55rem 1.1rem 0.85rem;
-      font-size: 0.72rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: flex-end;
-      transition: color 0.2s;
-    }
-
-    .port-card:hover .port-foot { color: var(--accent); }
-
-    /* ── CONTACT ── */
-    .contact-grid { display: flex; flex-direction: column; max-width: 520px; }
-
-    .contact-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: var(--text);
-      transition: color 0.15s;
-    }
-
-    .contact-row:hover { color: var(--accent); }
-    .contact-type { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.09em; }
-    .contact-val { font-size: 0.88rem; margin-top: 0.1rem; }
-    .contact-arr { font-size: 0.78rem; color: var(--subtle); transition: transform 0.2s, color 0.2s; }
-    .contact-row:hover .contact-arr { transform: translate(2px,-2px); color: var(--accent); }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 1.4rem 6vw;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.73rem;
-      color: var(--muted);
-    }
-
-    /* ── REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
-    .reveal.show { opacity: 1; transform: none; }
-
-    /* ── PAGINATION ── */
-    .port-pagination {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 2.5rem;
-    }
-
-    .page-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 36px;
-      height: 36px;
-      padding: 0 0.55rem;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      background: var(--card);
-      color: var(--muted);
-      font-family: 'Geist', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 400;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      letter-spacing: 0.02em;
-    }
-
-    .page-btn:hover:not(:disabled) {
-      border-color: var(--subtle);
-      color: var(--text);
-    }
-
-    .page-btn.active {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text);
-      font-weight: 500;
-    }
-
-    .page-btn:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
-
-    .page-info {
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-left: 0.5rem;
-    }
-
-    /* ── PROJECT LABELS / TAGS ── */
-    .port-labels {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.35rem;
-      padding: 0 1.1rem 0.75rem;
-    }
-
-    .port-label {
+    .contact-cta p { color: var(--text-muted); font-size: .9rem; margin-bottom: 1.5rem; }
+    .availability-dot {
       display: inline-block;
-      font-size: 0.66rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.18rem 0.55rem;
-      border-radius: 3px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      background: var(--surface);
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-      pointer-events: auto;
+      width: 8px; height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      margin-right: .4rem;
+      animation: pulse 2s infinite;
     }
 
-    .port-label:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: transparent;
-    }
-
-    /* Label filter bar */
-    .label-filter-wrap {
-      margin-bottom: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .label-filter-title {
-      font-size: 0.68rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-right: 0.3rem;
-      flex-shrink: 0;
-    }
-
-    .filter-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.65rem;
-      border-radius: 4px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      background: var(--card);
-      cursor: pointer;
-      transition: all 0.15s;
-      user-select: none;
-    }
-
-    .filter-tag:hover {
-      border-color: var(--subtle);
-      color: var(--text);
-    }
-
-    .filter-tag.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: var(--bg);
-    }
-
-    .filter-tag.all-tag.active {
+    /* ─── FOOTER ─── */
+    footer {
       background: var(--text);
-      border-color: var(--text);
-      color: var(--bg);
+      color: #aaa;
+      text-align: center;
+      padding: 2.5rem 5%;
+      font-size: .85rem;
+    }
+    footer strong { color: #fff; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: .4; }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
     }
 
-    /* ── HAMBURGER BUTTON ── */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      width: 34px;
-      height: 34px;
-      border-radius: 7px;
-      border: 1px solid var(--border);
-      background: var(--surface);
-      cursor: pointer;
-      padding: 0;
-      transition: border-color 0.2s, background 0.3s;
-      flex-shrink: 0;
-    }
-
-    .hamburger:hover { border-color: var(--subtle); }
-
-    .hamburger span {
-      display: block;
-      width: 16px;
-      height: 1.5px;
-      background: var(--muted);
-      border-radius: 2px;
-      transition: transform 0.25s ease, opacity 0.2s ease, background 0.3s;
-      transform-origin: center;
-    }
-
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* ── MOBILE DROPDOWN ── */
-    .nav-mobile {
-      display: none;
-      position: fixed;
-      top: 60px;
-      left: 0; right: 0;
-      background: var(--nav-bg);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border);
-      z-index: 98;
-      padding: 0.5rem 0;
-      transition: background 0.3s, border-color 0.3s;
-    }
-
-    .nav-mobile.open { display: block; }
-
-    .nav-mobile a {
-      display: block;
-      padding: 0.85rem 6vw;
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      border-bottom: 1px solid var(--border);
-      transition: color 0.2s, background 0.2s;
-    }
-
-    .nav-mobile a:last-child { border-bottom: none; }
-    .nav-mobile a:hover { color: var(--text); background: var(--surface); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 640px) {
-      .nav-center { display: none; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav-links, .nav-badge { display: none; }
       .hamburger { display: flex; }
-      .about-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-      .skill-row { flex-direction: column; gap: 0.65rem; }
-      footer { flex-direction: column; gap: 0.4rem; text-align: center; }
+      #about .inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .about-photo { aspect-ratio: 3/2; }
+      #contact .inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .stats-row { gap: 1.5rem; }
     }
 
-    /* ── BACK TO TOP ── */
-    .back-to-top {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.9rem;
-  border-radius: 6px;
-  font-size: 0.73rem;
-  color: var(--muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  text-decoration: none;
-  transition: color 0.2s, border-color 0.2s, transform 0.2s;
-}
-
-.back-to-top:hover {
-  color: var(--text);
-  border-color: var(--subtle);
-  transform: translateY(-2px);
-}
+    /* ─── BACK TO TOP ─── */
+    #backToTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 46px;
+      height: 46px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(12px);
+      transition: opacity .3s, visibility .3s, transform .3s, background .2s, box-shadow .2s;
+      z-index: 999;
+      box-shadow: 0 4px 16px rgba(42,92,143,.25);
+    }
+    #backToTop.visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    #backToTop:hover {
+      background: #1e4870;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(42,92,143,.35);
+    }
+    #backToTop:active {
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <ul class="nav-center">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#portfolio">Portfolio</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <div class="nav-right">
-    <div class="badge"><span class="badge-dot"></span> Available for work (Open to remote and relocate)</div>
-    <button class="theme-btn" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark">
-      <span id="themeIcon">☀</span>
-    </button>
-    <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+  <!-- ─── NAV ─── -->
+  <nav id="nav">
+    <a href="#home" class="nav-logo">Rizal Aditiyo Supendi</a>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <span class="nav-badge">
+      <span class="availability-dot"></span>Open to work
+    </span>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services" onclick="closeMenu()">Services</a>
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#portfolio" onclick="closeMenu()">Portfolio</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
   </div>
-</nav>
 
-  <!-- MOBILE NAV DROPDOWN -->
-<div class="nav-mobile" id="navMobile">
-  <a href="#home"      onclick="closeMobileNav()">Home</a>
-  <a href="#about"     onclick="closeMobileNav()">About</a>
-  <a href="#skills"    onclick="closeMobileNav()">Skills</a>
-  <a href="#portfolio" onclick="closeMobileNav()">Portfolio</a>
-  <a href="#contact"   onclick="closeMobileNav()">Contact</a>
-</div>
-
-<!-- HERO -->
-<section id="home">
-  <div class="container">
-    <div class="hero-tag">Data Analyst · Malang, Indonesia</div>
-    <h1>RIZAL<br><span class="accent">ADITIYO SUPENDI</span></h1>
+  <!-- ─── HERO ─── -->
+  <section id="home">
+    <p class="hero-sub">Data Analyst · Malang, Indonesia</p>
+    <h1 class="hero-title">Rizal Aditiyo<br/>Supendi</h1>
     <p class="hero-desc">
-      Dari data mentah jadi keputusan nyata — itulah yang saya lakukan. Analisis, visualisasi, machine learning.
+      Dari data mentah jadi keputusan nyata — analisis, visualisasi, machine learning.
+      Saya percaya keputusan terbaik lahir dari data yang tepat.
     </p>
-    <div class="hero-btns">
-      <a href="CV_Rizal_Aditiyo_Supendi.pdf" download class="btn btn-solid">↓ Download CV</a>
-      <a href="#portfolio" class="btn btn-ghost">View Portfolio</a>
+    <div class="hero-actions">
+      <a href="https://portofolio-rizaladitiyosupendi.netlify.app/CV_Rizal_Aditiyo_Supendi.pdf"
+         class="btn btn-primary" target="_blank" rel="noopener">↓ Download CV</a>
+      <a href="#portfolio" class="btn btn-outline">View Portfolio</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="about-layout">
+  <!-- ─── SERVICES ─── -->
+  <section id="services">
+    <div class="section-header">
+      <p class="section-label">Services</p>
+      <h2 class="section-title">What I Can Do For You</h2>
+      <div class="divider"></div>
+      <p class="section-desc">
+        Sebagai data analyst, saya mengubah data menjadi insight yang berharga dan dapat digunakan.
+        Fokus saya adalah memberikan hasil yang konkret dan bisa langsung diaplikasikan.
+      </p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <div class="service-icon">📊</div>
+        <h3>Data Analysis & EDA</h3>
+        <p>Eksplorasi dan analisis dataset yang kompleks — menemukan pola tersembunyi dan mengubahnya jadi insight yang mudah dipahami oleh stakeholder teknis maupun non-teknis.</p>
+        <p class="service-tools">Tools: Python (pandas, NumPy), SQL, BigQuery</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📈</div>
+        <h3>Dashboard & Visualisasi</h3>
+        <p>Membangun dashboard interaktif untuk monitoring performa bisnis dan eksplorasi data secara mandiri. Visualisasi yang informatif dan siap presentasi.</p>
+        <p class="service-tools">Tools: Power BI, Tableau, Google Looker Studio, Excel</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🤖</div>
+        <h3>Machine Learning</h3>
+        <p>Pengembangan model prediktif, segmentasi, dan klasifikasi. Feature engineering, evaluasi model, dan interpretasi hasil untuk keputusan bisnis yang lebih baik.</p>
+        <p class="service-tools">Tools: Python (scikit-learn, statsmodels), Predictive Modeling</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🗄️</div>
+        <h3>Database & SQL</h3>
+        <p>Penulisan query SQL yang efisien untuk ekstraksi, transformasi, dan analisis data. Mulai dari query sederhana hingga subquery bertingkat dan optimasi performa.</p>
+        <p class="service-tools">Tools: MySQL, SQL (subquery, aggregasi, joins)</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">🧹</div>
+        <h3>Data Cleaning & Prep</h3>
+        <p>Pembersihan dataset — menangani missing values, outlier, dan inkonsistensi data agar siap dianalisis. Kualitas data adalah fondasi dari insight yang akurat.</p>
+        <p class="service-tools">Tools: Python, Excel, OpenRefine</p>
+      </div>
+      <div class="service-card reveal">
+        <div class="service-icon">📣</div>
+        <h3>Marketing Analytics</h3>
+        <p>Analisis perilaku pengguna, retensi, segmentasi, dan market basket analysis untuk mendukung keputusan pemasaran yang lebih efektif dan berbasis data.</p>
+        <p class="service-tools">Tools: Cohort Analysis, Meta Ads Manager, Python</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="about">
+    <div class="inner">
+      <div class="about-photo reveal"><img src="rizal.webp" alt="Foto Profil"></div>
       <div class="reveal">
-        <div class="label">About</div>
-        <h2>Bukan Sekedar<br>Angka</h2>
-        <div class="rule"></div>
-        <p>Seorang Data Analyst yang suka "ngobrol" sama data — senang mengurai dataset yang rumit dan mengubahnya jadi insight yang mudah dipahami dan langsung bisa dipakai.</p>
-        <p>Lagi dalam perjalanan membangun karier di dunia data, terus belajar, dan percaya bahwa keputusan terbaik lahir dari data yang tepat.</p>
+        <p class="section-label">About Me</p>
+        <h2 class="section-title">Bukan Sekadar Angka</h2>
+        <div class="divider"></div>
+        <p style="color:var(--text-muted); margin-bottom:1rem;">
+          Hei! Nama saya <strong>Rizal Aditiyo Supendi</strong>, seorang Data Analyst dari Malang, Indonesia. 
+          Saya suka "ngobrol" sama data — senang mengurai dataset yang rumit dan mengubahnya jadi insight yang mudah dipahami dan langsung bisa dipakai.
+        </p>
+        <p style="color:var(--text-muted); margin-bottom:1rem;">
+          Saya percaya bahwa data bukan hanya tentang angka — tapi tentang <em>cerita</em> yang tersembunyi di baliknya. 
+          Setiap dataset adalah puzzle yang ingin saya pecahkan.
+        </p>
+        <p style="color:var(--text-muted);">
+          Saat ini sedang membangun karier di dunia data, aktif belajar, dan terbuka untuk peluang kerja — remote maupun relokasi.
+        </p>
+        <div class="stats-row">
+          <div class="stat">
+            <div class="stat-num">1+</div>
+            <div class="stat-label">Tahun pengalaman</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4+</div>
+            <div class="stat-label">Tools dikuasai</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">5+</div>
+            <div class="stat-label">Sertifikasi</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Data curiosity</div>
+          </div>
+        </div>
+        <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PORTFOLIO ─── -->
+  <section id="portfolio">
+    <div class="section-header">
+      <p class="section-label">Portfolio</p>
+      <h2 class="section-title">Selected Work</h2>
+      <div class="divider"></div>
+      <p class="section-desc">
+        Kumpulan proyek yang mencerminkan kemampuan saya dalam analisis data, visualisasi, dan machine learning.
+      </p>
+    </div>
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/Portofolio Bootcamp Data Analyst KarirNex.webp" alt="KarirNex Bootcamp" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>Bootcamp Data Analyst – KarirNex</h3>
+          <p>Dashboard penjualan, pembersihan data, dan laporan analisis dari 2 minggu bootcamp intensif menggunakan Excel, SQL, Python, dan Power BI.</p>
+          <div class="tags">
+            <span class="tag">Excel</span><span class="tag">SQL</span><span class="tag">Python</span><span class="tag">Power BI</span>
+          </div>
+          <a href="https://www.slideshare.net/slideshow/portofolio-bootcamp-data-analyst-x-karirnex-oleh-rizal-aditiyo-supendi/286698826"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/eksporimpor.png" alt="Ekspor Impor" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>Analisis Ekspor Impor Indonesia</h3>
+          <p>Analisis data ekspor impor Indonesia dengan Python, visualisasi, dan insight bisnis dari data resmi BPS bulan Januari 2026.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Visualisasi</span></div>
+          <a href="https://www.slideshare.net/slideshow/analisis-data-ekspor-impor-indonesia-menggunakan-python-untuk-insight-bisnis/286729675"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/retailtransactiondashboard.webp" alt="Retail Dashboard" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>Retail Transaction Analytics Center</h3>
+          <p>Dashboard interaktif yang menampilkan ringkasan transaksi, performa cabang, dan insight penjualan siap pakai untuk keputusan bisnis.</p>
+          <div class="tags"><span class="tag">Looker Studio</span><span class="tag">Visualisasi</span></div>
+          <a href="https://lookerstudio.google.com/embed/reporting/db872768-7c76-416d-8eae-2bb74969bc0f/page/Bn1rF"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/interactivechart.png" alt="Interactive Chart" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>Interactive Chart Excel</h3>
+          <p>Chart dinamis dan interaktif di Excel tanpa VBA — eksplorasi data yang intuitif untuk siapa saja, menggunakan kontrol bawaan Excel.</p>
+          <div class="tags"><span class="tag">Excel</span><span class="tag">Visualisasi</span></div>
+          <a href="https://interactivechart-excel-rizal.netlify.app/"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/userretention.webp" alt="User Retention" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>User Retention Analysis</h3>
+          <p>Memahami loyalitas pengguna — apakah mereka cukup puas untuk kembali bertransaksi atau pergi setelah satu kali mencoba. Analisis berbasis Python.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Cohort</span></div>
+          <a href="https://colab.research.google.com/drive/1Z6bhW7ardDM2djBozCtM4_dnaBAX8JgQ"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+      <div class="portfolio-card reveal">
+        <div class="portfolio-thumb">
+          <img src="https://portofolio-rizaladitiyosupendi.netlify.app/mba2.png" alt="Market Basket Analysis" onerror="this.style.display='none'" />
+        </div>
+        <div class="portfolio-body">
+          <h3>Market Basket Analysis</h3>
+          <p>Menemukan pola kombinasi produk yang sering dibeli bersamaan — insight yang langsung bisa digunakan untuk strategi cross-selling dan bundling.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Association Rules</span></div>
+          <a href="https://colab.research.google.com/drive/1oaME9LKIfiUMePSV-RO5VIiy2a8jD_eC"
+             class="portfolio-link" target="_blank" rel="noopener">Lihat Proyek →</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:3rem;">
+      <a href="https://portofolio-rizaladitiyosupendi.netlify.app/#portfolio"
+         class="btn btn-outline" target="_blank" rel="noopener">Lihat Semua Proyek</a>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="inner">
+      <div class="contact-info reveal">
+        <p class="section-label">Contact</p>
+        <h2 class="section-title">Mari Berkolaborasi</h2>
+        <div class="divider"></div>
+        <p>
+          Saya terbuka untuk proyek freelance, full-time, maupun kolaborasi riset di bidang data.
+          Hubungi saya melalui kanal di bawah ini.
+        </p>
+        <ul class="contact-list">
+          <li>
+            <a href="/cdn-cgi/l/email-protection#6113081b000d0005081508180e121411040f050821060c00080d4f020e0c">
+              <div class="contact-icon">✉</div>
+              <div class="contact-detail">
+                <strong>Email</strong>
+                <span><span class="__cf_email__" data-cfemail="76041f0c171a17121f021f0f190503061318121f36111b171f1a5815191b">[email&#160;protected]</span></span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="tel:+6285161141246">
+              <div class="contact-icon">📱</div>
+              <div class="contact-detail">
+                <strong>Phone / WhatsApp</strong>
+                <span>+62 851 6114 1246</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/rizal-aditiyo-supendi/" target="_blank" rel="noopener">
+              <div class="contact-icon">in</div>
+              <div class="contact-detail">
+                <strong>LinkedIn</strong>
+                <span>rizal-aditiyo-supendi</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/rizaladitiyosup" target="_blank" rel="noopener">
+              <div class="contact-icon">⌥</div>
+              <div class="contact-detail">
+                <strong>GitHub</strong>
+                <span>rizaladitiyosup</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="https://public.tableau.com/app/profile/rizal.aditiyo.supendi/vizzes" target="_blank" rel="noopener">
+              <div class="contact-icon">📉</div>
+              <div class="contact-detail">
+                <strong>Tableau Public</strong>
+                <span>rizal.aditiyo.supendi</span>
+              </div>
+            </a>
+          </li>
+        </ul>
       </div>
       <div class="reveal">
-        <div class="stats">
-          <div class="stat"><div class="stat-n">1+</div><div class="stat-l">Years experience</div></div>
-          <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Tools mastered</div></div>
-          <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Certifications</div></div>
-          <div class="stat"><div class="stat-n">∞</div><div class="stat-l">Data curiosity</div></div>
+        <div class="contact-cta">
+          <h3>Siap bekerja sama?</h3>
+          <p>
+            Saya membantu bisnis dan individu mengoptimalkan penggunaan data — dari analisis eksplorasi, dashboard, hingga model prediktif.
+          </p>
+          <p style="margin-bottom:1.5rem;">
+            <span class="availability-dot"></span>
+            <strong>Tersedia untuk proyek</strong> — remote maupun relokasi.
+          </p>
+          <a href="/cdn-cgi/l/email-protection#64160d1e050805000d100d1d0b171114010a000d240309050d084a070b09" class="btn btn-primary" style="width:100%;text-align:center;display:block;">
+            Kirim Email Sekarang
+          </a>
+          <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+            <p style="font-size:.85rem; color:var(--text-muted); margin-bottom:.75rem;">Atau download CV saya:</p>
+            <a href="https://portofolio-rizaladitiyosupendi.netlify.app/CV_Rizal_Aditiyo_Supendi.pdf"
+               class="btn btn-outline" style="width:100%;text-align:center;display:block;" target="_blank" rel="noopener">
+              ↓ Download CV
+            </a>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem; padding:1.5rem; border:1px solid var(--border); border-radius:6px; font-size:.875rem; color:var(--text-muted);">
+          <strong style="color:var(--text); font-size:.8rem; text-transform:uppercase; letter-spacing:.08em;">Lokasi</strong><br/>
+          Malang, Jawa Timur, Indonesia<br/>
+          <em>(Open to remote & relocation)</em>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="container">
-    <div class="reveal">
-      <div class="label">Skills</div>
-      <h2>What I work with</h2>
-      <div class="rule"></div>
-    </div>
-    <div class="reveal">
-      <div class="skill-row">
-        <span class="skill-cat">Analysis</span>
-        <div class="skill-items">
-          <span class="tag">Data Cleaning</span><span class="tag">EDA</span>
-          <span class="tag">Descriptive Statistics</span><span class="tag">Hypothesis Testing</span>
-          <span class="tag">Cohort Analysis</span><span class="tag">Regression</span>
-          <span class="tag">Clustering</span><span class="tag">Classification</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Machine Learning</span>
-        <div class="skill-items">
-          <span class="tag">Predictive Modeling</span>
-          <span class="tag">Feature Engineering</span>
-          <span class="tag">Model Evaluation</span>
-        </div>
-      </div>
-      <div class="skill-row">
-        <span class="skill-cat">Tools</span>
-        <div class="skill-items">
-          <span class="tag">MySQL</span><span class="tag">Tableau</span>
-          <span class="tag">Power BI</span><span class="tag">Google Looker Studio</span>
-          <span class="tag">Excel</span><span class="tag">Meta Ads Manager</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <p>© 2026 <strong>Rizal Aditiyo Supendi</strong></p>
+  </footer>
 
-<!-- PORTFOLIO -->
-<section id="portfolio">
-  <div class="container">
-    <div class="reveal">
-      <div class="label">Portfolio</div>
-      <h2>Selected work</h2>
-      <div class="rule"></div>
-    </div>
-    <div class="search-wrap reveal">
-      <div class="search-box">
-        <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input class="search-input" id="portSearch" type="text" placeholder="Search portfolio…" autocomplete="off"/>
-        <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
-      </div>
-      <span class="search-count" id="searchCount"></span>
-    </div>
-    <p class="no-results" id="noResults">No results for "<span id="noResultsQuery"></span>"</p>
 
-    <!-- LABEL FILTER BAR -->
-    <div class="label-filter-wrap reveal" id="labelFilterWrap">
-      <span class="label-filter-title">Filter:</span>
-    </div>
-
-    <div class="port-grid">
-
-      <!--
-        CARA MENGGANTI THUMBNAIL:
-        1. Taruh file gambar (misal: tableau.png) di folder yang sama dengan index.html
-        2. Hapus seluruh blok <div class="port-thumb-placeholder">...</div>
-        3. Uncomment tag <img> di bawahnya, ganti src="..."
-      -->
-
-<!-- Card 1 -->
-      <a href="https://www.slideshare.net/slideshow/portofolio-bootcamp-data-analyst-x-karirnex-oleh-rizal-aditiyo-supendi/286698826" class="port-card reveal" data-labels="Excel, SQL, Python, Power BI, Visualizations">
-        <img class="port-thumb" src="Portofolio Bootcamp Data Analyst KarirNex.webp" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Portofolio Bootcamp Data Analyst KarirNex</div>
-          <div class="port-desc">Aku mau sharing hasil mini project dari 2 minggu Bootcamp Data Analyst Pakai Excel, SQL, Python dan Power BI oleh Karirnex! Di mini project ini, aku membuat dashboard penjualan, tugas pembersihan data dan laporan analisis.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Excel">Excel</span>
-          <span class="port-label" data-label="SQL">SQL</span>
-          <span class="port-label" data-label="Python">Python</span>
-          <span class="port-label" data-label="Power BI">Power BI</span>
-          <span class="port-label" data-label="Visualizations">Visualizations</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-<!-- Card 2 -->
-      <a href="https://www.slideshare.net/slideshow/analisis-data-ekspor-impor-indonesia-menggunakan-python-untuk-insight-bisnis/286729675" class="port-card reveal" data-labels="Python,Visualizations">
-        <img class="port-thumb" src="eksporimpor.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Analisis Data Ekspor Impor Indonesia Menggunakan Python untuk Insight Bisnis</div>
-          <div class="port-desc">Analisis data ekspor impor Indonesia dengan Python, visualisasi, dan insight bisnis dari data resmi BPS bulan Januari 2026.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Python">Python</span>
-          <span class="port-label" data-label="Visualizations">Visualizations</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-      
-<!-- Card 3 -->
-      <a href="https://interactivechart-excel-rizal.netlify.app/" class="port-card reveal" data-labels="Excel,Visualizations">
-        <img class="port-thumb" src="interactivechart.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Implementasi Interactive Chart Excel</div>
-          <div class="port-desc">Membangun chart dinamis dan interaktif di Excel menggunakan fitur kontrol bawaan — tanpa VBA, langsung bisa digunakan oleh siapa saja untuk eksplorasi data yang intuitif.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Google Looker Studio">Excel</span>
-          <span class="port-label" data-label="Visualizations">Visualizations</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-      
-<!-- Card 4 -->
-      <a href="https://lookerstudio.google.com/embed/reporting/db872768-7c76-416d-8eae-2bb74969bc0f/page/Bn1rF" class="port-card reveal" data-labels="Google Looker Studio,Visualizations">
-        <img class="port-thumb" src="retailtransactiondashboard.webp" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Retail Transaction Analytics Center</div>
-          <div class="port-desc">From raw data to business decisions. This interactive dashboard delivers transaction summaries, branch performance, and sales insights you can act on immediately.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Google Looker Studio">Google Looker Studio</span>
-          <span class="port-label" data-label="Visualizations">Visualizations</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-      
-      <!-- Card 5 -->
-      <a href="https://portofolio-rizal-bos-kemdikbud.netlify.app/" class="port-card reveal" data-labels="SQL">
-        <img class="port-thumb" src="BOS-Kemdikbud.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">BOS Kemdikbud (2025)</div>
-          <div class="port-desc">Implementing SQL in MySQL</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="SQL">SQL</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-      <!-- Card 6 -->
-      <a href="https://colab.research.google.com/drive/1Z6bhW7ardDM2djBozCtM4_dnaBAX8JgQ" class="port-card reveal" data-labels="Python">
-        <img class="port-thumb" src="userretention.webp" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Project: User Retention Analysis</div>
-          <div class="port-desc">User Retention Analysis adalah cara kita memahami seberapa loyal pengguna kita — apakah mereka cukup puas untuk kembali bertransaksi, atau justru pergi begitu saja setelah sekali mencoba.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Python">Python</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-      <!-- Card 7 -->
-      <a href="https://colab.research.google.com/drive/1aCYj0vBJ2eFtHJBTJzDbYVLq78vTet85#scrollTo=iqZJpRy7CiUO" class="port-card reveal" data-labels="Python">
-        <img class="port-thumb" src="usersegmentation.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Project: User Segmentation Analysis</div>
-          <div class="port-desc">User Segmentation Analysis adalah proses menganalisis data pengguna untuk mengelompokkan mereka ke dalam segmen-segmen bermakna, lalu mengambil insight atau rekomendasi dari pola yang ditemukan.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Python">Python</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-      <!-- Card 8 -->
-      <a href="https://colab.research.google.com/drive/1oaME9LKIfiUMePSV-RO5VIiy2a8jD_eC" class="port-card reveal" data-labels="Python">
-        <img class="port-thumb" src="mba2.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Project: Market Basket Analysis #2</div>
-          <div class="port-desc">Market Basket Analysis (MBA) adalah teknik analisis data yang digunakan untuk menemukan pola kombinasi produk yang sering dibeli bersamaan oleh pelanggan dalam satu transaksi.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Python">Python</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-      <!-- Card 9 -->
-      <a href="https://colab.research.google.com/drive/1ulkVqq_elXSc9rlu8ObcQHXY1QZarJRR" class="port-card reveal" data-labels="Python">
-        <img class="port-thumb" src="mba1.png" alt="Project Preview"/>
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Project: Market Basket Analysis #1</div>
-          <div class="port-desc">Market Basket Analysis (MBA) adalah teknik analisis data yang digunakan untuk menemukan pola kombinasi produk yang sering dibeli bersamaan oleh pelanggan dalam satu transaksi.</div>
-        </div>
-        <div class="port-labels">
-          <span class="port-label" data-label="Python">Python</span>
-          
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-<!-- Card 10 -->
-      <a href="#" class="port-card reveal">
-        <div class="port-thumb-placeholder">
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-          </svg>
-          Thumbnail
-        </div>
-        <!-- <img class="port-thumb" src="project.png" alt="Project Preview"/> -->
-        <div class="port-body">
-          <div class="port-meta">Project</div>
-          <div class="port-title">Proyek Lainnya</div>
-          <div class="port-desc">Coming soon.</div>
-        </div>
-        <div class="port-foot">↗ Open project</div>
-      </a>
-
-      
-    </div>
-
-    <!-- PAGINATION -->
-    <div class="port-pagination reveal" id="portPagination">
-      <button class="page-btn" id="pagePrev" aria-label="Previous page">← Prev</button>
-      <div id="pageNumbers" style="display:flex;gap:0.5rem;"></div>
-      <button class="page-btn" id="pageNext" aria-label="Next page">Next →</button>
-      <span class="page-info" id="pageInfo"></span>
-    </div>
-
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="reveal">
-      <div class="label">Contact</div>
-      <h2>Get in touch</h2>
-      <div class="rule"></div>
-    </div>
-    <div class="contact-grid reveal">
-      <a href="mailto:rizaladitiyosupendi@gmail.com" class="contact-row">
-        <div><div class="contact-type">Email</div><div class="contact-val">rizaladitiyosupendi@gmail.com</div></div>
-        <span class="contact-arr">↗</span>
-      </a>
-      <a href="tel:+6285161141246" class="contact-row">
-        <div><div class="contact-type">Phone / WhatsApp</div><div class="contact-val">+62 851 6114 1246</div></div>
-        <span class="contact-arr">↗</span>
-      </a>
-      <a href="https://www.linkedin.com/in/rizal-aditiyo-supendi/" target="_blank" class="contact-row">
-        <div><div class="contact-type">LinkedIn</div><div class="contact-val">rizal-aditiyo-supendi</div></div>
-        <span class="contact-arr">↗</span>
-      </a>
-      <a href="https://github.com/rizaladitiyosup" target="_blank" class="contact-row">
-        <div><div class="contact-type">GitHub</div><div class="contact-val">rizaladitiyosup</div></div>
-        <span class="contact-arr">↗</span>
-      </a>
-      <a href="https://public.tableau.com/app/profile/rizal.aditiyo.supendi/vizzes" target="_blank" class="contact-row">
-        <div><div class="contact-type">Tableau</div><div class="contact-val">rizal.aditiyo.supendi</div></div>
-        <span class="contact-arr">↗</span>
-      </a>
-    </div>
-    <a href="CV_Rizal_Aditiyo_Supendi.pdf" download class="btn btn-solid" style="margin-top:2rem">↓ Download CV</a>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <span>© 2026 Rizal Aditiyo Supendi</span>
-  <a href="#home" class="back-to-top">
-    ↑ Back to top
-  </a>
-  <div class="badge"><span class="badge-dot"></span> Available for work (Open to remote and relocate)</div>
-</footer>
-
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  // ── HAMBURGER MENU ──
-  const hamburgerBtn = document.getElementById('hamburgerBtn');
-  const navMobile    = document.getElementById('navMobile');
-
-  hamburgerBtn.addEventListener('click', () => {
-    hamburgerBtn.classList.toggle('open');
-    navMobile.classList.toggle('open');
-  });
-
-  function closeMobileNav() {
-    hamburgerBtn.classList.remove('open');
-    navMobile.classList.remove('open');
-  }
-
-  // Close when clicking outside
-  document.addEventListener('click', (e) => {
-    if (!hamburgerBtn.contains(e.target) && !navMobile.contains(e.target)) {
-      closeMobileNav();
-    }
-  });
-  
-  // ── THEME TOGGLE ──
-  const html = document.documentElement;
-  const btn  = document.getElementById('themeToggle');
-  const icon = document.getElementById('themeIcon');
-
-  function setTheme(theme) {
-    html.setAttribute('data-theme', theme);
-    icon.textContent = theme === 'dark' ? '☀' : '☾';
-    localStorage.setItem('theme', theme);
-  }
-
-  // Default: dark. Restore if user previously switched.
-  const saved = localStorage.getItem('theme') || 'dark';
-  setTheme(saved);
-
-  btn.addEventListener('click', () => {
-    setTheme(html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
-  });
-
-  // ── SCROLL REVEAL ──
-  const els = document.querySelectorAll('.reveal');
-  const io  = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) setTimeout(() => e.target.classList.add('show'), i * 65);
-    });
-  }, { threshold: 0.1 });
-  els.forEach(el => io.observe(el));
-
-  // ── PORTFOLIO SEARCH ──
-  const searchInput = document.getElementById('portSearch');
-  const searchClear = document.getElementById('searchClear');
-  const searchCount = document.getElementById('searchCount');
-  const noResults   = document.getElementById('noResults');
-  const noResultsQ  = document.getElementById('noResultsQuery');
-  const cards       = document.querySelectorAll('.port-card');
-
-  // Store original text for each card field
-  cards.forEach(card => {
-    const meta  = card.querySelector('.port-meta');
-    const title = card.querySelector('.port-title');
-    const desc  = card.querySelector('.port-desc');
-    if (meta)  meta.dataset.orig  = meta.textContent;
-    if (title) title.dataset.orig = title.textContent;
-    if (desc)  desc.dataset.orig  = desc.textContent;
-  });
-
-  function escapeRe(str) {
-    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  }
-
-  function highlight(el, query) {
-    if (!el) return;
-    const orig = el.dataset.orig || el.textContent;
-    if (!query) { el.innerHTML = orig; return; }
-    const re = new RegExp(`(${escapeRe(query)})`, 'gi');
-    el.innerHTML = orig.replace(re, '<mark>$1</mark>');
-  }
-
-  function doSearch(q) {
-    const query = q.trim().toLowerCase();
-    let visible = 0;
-
-    cards.forEach(card => {
-      const meta  = card.querySelector('.port-meta');
-      const title = card.querySelector('.port-title');
-      const desc  = card.querySelector('.port-desc');
-
-      const text = [
-        meta?.dataset.orig  || '',
-        title?.dataset.orig || '',
-        desc?.dataset.orig  || ''
-      ].join(' ').toLowerCase();
-
-      const match = !query || text.includes(query);
-
-      card.classList.toggle('hidden', !match);
-      if (match) {
-        visible++;
-        highlight(meta, q.trim());
-        highlight(title, q.trim());
-        highlight(desc, q.trim());
-      }
+  <!-- ─── BACK TO TOP ─── -->
+  <button id="backToTop" aria-label="Back to top" title="Back to top">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ─── Nav scroll shadow ───
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    // count label
-    if (query) {
-      searchCount.textContent = `${visible} result${visible !== 1 ? 's' : ''}`;
-    } else {
-      searchCount.textContent = '';
+    // ─── Hamburger ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
     }
 
-    // no-results message
-    noResultsQ.textContent = q.trim();
-    noResults.classList.toggle('visible', query !== '' && visible === 0);
-
-    // clear button
-    searchClear.classList.toggle('visible', q.length > 0);
-  }
-
-  // Search listeners handled by pagination version below
-
-
-  // ── ACTIVE NAV HIGHLIGHT ──
-  const sections  = document.querySelectorAll('section[id]');
-  const navLinks  = document.querySelectorAll('.nav-center a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 80) current = s.id;
-    });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current
-        ? 'var(--text)' : '';
-    });
-  });
-
-  // ── IN-PAGE PAGINATION ──
-  const CARDS_PER_PAGE = 6;
-  let currentPage = 1;
-  let filteredCards = [];
-
-  function getAllCards() {
-    return Array.from(document.querySelectorAll('.port-card'));
-  }
-
-  function renderPage(page) {
-    const allCards = getAllCards();
-    // Determine which cards are "active" (not hidden by search or label filter)
-    const active = allCards.filter(c => !c.classList.contains('search-hidden') && !c.classList.contains('label-hidden'));
-    filteredCards = active;
-
-    const totalPages = Math.max(1, Math.ceil(active.length / CARDS_PER_PAGE));
-    currentPage = Math.min(Math.max(1, page), totalPages);
-
-    const start = (currentPage - 1) * CARDS_PER_PAGE;
-    const end   = start + CARDS_PER_PAGE;
-
-    // Show/hide cards based on page
-    allCards.forEach(card => {
-      if (card.classList.contains('search-hidden') || card.classList.contains('label-hidden')) {
-        card.classList.add('hidden');
-        return;
-      }
-      const idx = active.indexOf(card);
-      card.classList.toggle('hidden', idx < start || idx >= end);
-    });
-
-    updatePaginationUI(totalPages);
-  }
-
-  function updatePaginationUI(totalPages) {
-    const prev    = document.getElementById('pagePrev');
-    const next    = document.getElementById('pageNext');
-    const nums    = document.getElementById('pageNumbers');
-    const info    = document.getElementById('pageInfo');
-    const wrapper = document.getElementById('portPagination');
-
-    // Hide pagination if only 1 page
-    wrapper.style.display = totalPages <= 1 ? 'none' : 'flex';
-
-    prev.disabled = currentPage === 1;
-    next.disabled = currentPage === totalPages;
-
-    // Page number buttons
-    nums.innerHTML = '';
-    for (let i = 1; i <= totalPages; i++) {
-      const btn = document.createElement('button');
-      btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
-      btn.textContent = i;
-      btn.addEventListener('click', () => {
-        renderPage(i);
-        // Smooth scroll to top of portfolio section
-        document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-      nums.appendChild(btn);
-    }
-
-    const start = (currentPage - 1) * CARDS_PER_PAGE + 1;
-    const end   = Math.min(currentPage * CARDS_PER_PAGE, filteredCards.length);
-    info.textContent = filteredCards.length > 0
-      ? `${start}–${end} of ${filteredCards.length}`
-      : '';
-  }
-
-  // Prev / Next buttons
-  document.getElementById('pagePrev').addEventListener('click', () => {
-    renderPage(currentPage - 1);
-    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-  document.getElementById('pageNext').addEventListener('click', () => {
-    renderPage(currentPage + 1);
-    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
-  // Override doSearch to also reset pagination
-  const _origDoSearch = doSearch;
-  function doSearchWithPagination(q) {
-    const query = q.trim().toLowerCase();
-    const allCards = getAllCards();
-
-    allCards.forEach(card => {
-      const meta  = card.querySelector('.port-meta');
-      const title = card.querySelector('.port-title');
-      const desc  = card.querySelector('.port-desc');
-      const text  = [
-        meta?.dataset.orig  || '',
-        title?.dataset.orig || '',
-        desc?.dataset.orig  || ''
-      ].join(' ').toLowerCase();
-
-      const match = !query || text.includes(query);
-      card.classList.toggle('search-hidden', !match);
-
-      if (match) {
-        highlight(meta, q.trim());
-        highlight(title, q.trim());
-        highlight(desc, q.trim());
-      }
-    });
-
-    const visible = allCards.filter(c => !c.classList.contains('search-hidden')).length;
-
-    if (query) {
-      searchCount.textContent = `${visible} result${visible !== 1 ? 's' : ''}`;
-    } else {
-      searchCount.textContent = '';
-    }
-    noResultsQ.textContent = q.trim();
-    noResults.classList.toggle('visible', query !== '' && visible === 0);
-    searchClear.classList.toggle('visible', q.length > 0);
-
-    // Reset to page 1 on new search
-    renderPage(1);
-  }
-
-  // Replace the original event listeners with paginated version
-  searchInput.removeEventListener('input', searchInput._handler);
-  searchInput.addEventListener('input', e => doSearchWithPagination(e.target.value));
-  searchClear.addEventListener('click', () => {
-    searchInput.value = '';
-    doSearchWithPagination('');
-    searchInput.focus();
-  });
-
-  // Initial render
-  renderPage(1);
-
-  // ── LABEL FILTER SYSTEM ──
-  (function() {
-    const cards = Array.from(document.querySelectorAll('.port-card'));
-    const filterWrap = document.getElementById('labelFilterWrap');
-    let activeLabel = null;
-
-    // Collect all unique labels from cards
-    const allLabels = new Set();
-    cards.forEach(card => {
-      const raw = card.dataset.labels || '';
-      raw.split(',').map(l => l.trim()).filter(Boolean).forEach(l => allLabels.add(l));
-    });
-
-    // Build filter pills
-    const allPill = document.createElement('button');
-    allPill.className = 'filter-tag all-tag active';
-    allPill.textContent = 'All';
-    allPill.addEventListener('click', () => setLabelFilter(null));
-    filterWrap.appendChild(allPill);
-
-    allLabels.forEach(label => {
-      const pill = document.createElement('button');
-      pill.className = 'filter-tag';
-      pill.textContent = label;
-      pill.dataset.label = label;
-      pill.addEventListener('click', () => setLabelFilter(label));
-      filterWrap.appendChild(pill);
-    });
-
-    function setLabelFilter(label) {
-      activeLabel = label;
-
-      // Update pill active states
-      filterWrap.querySelectorAll('.filter-tag').forEach(p => p.classList.remove('active'));
-      if (!label) {
-        allPill.classList.add('active');
-      } else {
-        filterWrap.querySelector(`[data-label="${label}"]`)?.classList.add('active');
-      }
-
-      // Apply filter: set label-hidden class
-      cards.forEach(card => {
-        if (!label) {
-          card.classList.remove('label-hidden');
-        } else {
-          const cardLabels = (card.dataset.labels || '').split(',').map(l => l.trim());
-          card.classList.toggle('label-hidden', !cardLabels.includes(label));
+    // ─── Scroll reveal ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
         }
       });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
 
-      // Reset search and re-run pagination
-      searchInput.value = '';
-      doSearchWithPagination('');
-    }
-
-    // Patch doSearchWithPagination to respect label filter
-    const _origDoSearchWithPagination = doSearchWithPagination;
-    window._labelAwareSearch = function(q) {
-      const query = q.trim().toLowerCase();
-      const allCards = getAllCards();
-
-      allCards.forEach(card => {
-        if (card.classList.contains('label-hidden')) {
-          card.classList.add('search-hidden');
-          return;
-        }
-        const meta  = card.querySelector('.port-meta');
-        const title = card.querySelector('.port-title');
-        const desc  = card.querySelector('.port-desc');
-        const text  = [
-          meta?.dataset.orig  || '',
-          title?.dataset.orig || '',
-          desc?.dataset.orig  || ''
-        ].join(' ').toLowerCase();
-
-        const match = !query || text.includes(query);
-        card.classList.toggle('search-hidden', !match);
-
-        if (match) {
-          highlight(meta, q.trim());
-          highlight(title, q.trim());
-          highlight(desc, q.trim());
-        }
-      });
-
-      const visible = allCards.filter(c => !c.classList.contains('search-hidden')).length;
-      if (query) {
-        searchCount.textContent = `${visible} result${visible !== 1 ? 's' : ''}`;
-      } else {
-        searchCount.textContent = '';
-      }
-      noResultsQ.textContent = q.trim();
-      noResults.classList.toggle('visible', query !== '' && visible === 0);
-      searchClear.classList.toggle('visible', q.length > 0);
-      renderPage(1);
-    };
-
-    // Also make port-label chips clickable to filter
-    document.querySelectorAll('.port-label').forEach(chip => {
-      chip.addEventListener('click', e => {
-        e.preventDefault();
-        e.stopPropagation();
-        const lbl = chip.dataset.label;
-        setLabelFilter(activeLabel === lbl ? null : lbl);
-      });
+    // ─── Back to Top ───
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
     });
-  })();
-
-</script>
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
 </body>
 </html>
