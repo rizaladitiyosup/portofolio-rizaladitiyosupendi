@@ -322,14 +322,6 @@
       inset: 0;
       background: linear-gradient(135deg, transparent 60%, var(--accent-light) 100%);
     }
-    .about-photo img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover; /* INI KUNCINYA: Gambar akan mengisi kotak tanpa gepeng */
-      object-position: center; /* Memastikan bagian tengah foto (wajah) tidak terpotong */
-    }
-    
     .stats-row {
       display: flex;
       gap: 2.5rem;
@@ -525,9 +517,7 @@
       .nav-links, .nav-badge { display: none; }
       .hamburger { display: flex; }
       #about .inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-photo { aspect-ratio: 1/1;
-                    max-width: 400px; /* Opsional: batasi lebar maksimal agar tidak terlalu raksasa */
-                    margin: 0 auto;  /* Tengahkan kontainer foto */}
+      .about-photo { aspect-ratio: 3/2; }
       #contact .inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .stats-row { gap: 1.5rem; }
     }
