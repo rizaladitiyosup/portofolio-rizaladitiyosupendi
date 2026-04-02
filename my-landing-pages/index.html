@@ -304,8 +304,7 @@
     }
     .about-photo {
       width: 100%;
-      height: 100%;
-      aspect-ratio: 1/1;
+      aspect-ratio: 4/5;
       border-radius: 6px;
       background: var(--accent-light);
       display: flex;
@@ -314,12 +313,12 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 4rem;
       color: var(--accent);
-      position: top;
+      position: relative;
       overflow: hidden;
     }
     .about-photo::after {
       content: '';
-      position: top;
+      position: absolute;
       inset: 0;
       background: linear-gradient(135deg, transparent 60%, var(--accent-light) 100%);
     }
@@ -518,7 +517,7 @@
       .nav-links, .nav-badge { display: none; }
       .hamburger { display: flex; }
       #about .inner { grid-template-columns: 1fr; gap: 2.5rem; }
-      .about-photo { aspect-ratio: 1/1; }
+      .about-photo { aspect-ratio: 3/2; }
       #contact .inner { grid-template-columns: 1fr; gap: 2.5rem; }
       .stats-row { gap: 1.5rem; }
     }
